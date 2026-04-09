@@ -18,7 +18,6 @@ namespace Infrastructure.Installers
 
         private void BindStates()
         {
-            Container.Bind<MetaState>().AsSingle();
             Container.Bind<CoreState>().AsSingle();
         }
     }

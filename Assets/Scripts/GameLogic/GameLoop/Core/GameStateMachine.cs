@@ -50,7 +50,6 @@ namespace GameLogic.GameLoop.Core
         {
             _states = new Dictionary<Type, IState>
             {
-                [typeof(MetaState)] = _container.Resolve<MetaState>(),
                 [typeof(CoreState)] = _container.Resolve<CoreState>()
             };
         }

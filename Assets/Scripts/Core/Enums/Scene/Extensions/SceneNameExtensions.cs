@@ -8,7 +8,6 @@ namespace Core.Enums.Scene.Extensions
         {
             return scene switch
             {
-                SceneType.Meta => nameof(SceneType.Meta),
                 SceneType.Core => nameof(SceneType.Core),
                 _ => throw new ArgumentOutOfRangeException(nameof(scene), scene, null)
             };

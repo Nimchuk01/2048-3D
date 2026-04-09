@@ -43,9 +43,6 @@ namespace Infrastructure.Services.SceneTransition
 
             switch (scene)
             {
-                case SceneType.Meta:
-                    _gameStateMachine.Enter<MetaState>();
-                    break;
                 case SceneType.Core:
                     _gameStateMachine.Enter<CoreState>();
                     break;

@@ -9,12 +9,15 @@ namespace Presentation.UI.Views.Screens.Gameplay
     public class GameplayHUDViewModel : UIBaseViewModel
     {
         public override UIIdentifier UIIdentifier => UIIdentifier.From(ScreenType.GameplayHUD);
-        
+
         private readonly ISceneTransitionService _sceneTransitionService;
-        
-        public GameplayHUDViewModel(ISceneTransitionService sceneTransitionService) => 
+
+        public GameplayHUDViewModel(ISceneTransitionService sceneTransitionService) =>
             _sceneTransitionService = sceneTransitionService;
 
-        public void GoToMenu() => _sceneTransitionService.RequestTransition(SceneType.Meta);
+        public void GoToMenu()
+        {
+            //_sceneTransitionService.RequestTransition(SceneType.Meta);
+        }
     }
 }

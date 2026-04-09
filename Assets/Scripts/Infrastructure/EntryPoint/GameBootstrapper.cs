@@ -22,7 +22,7 @@ namespace Infrastructure.EntryPoint
         {
             await InitializeServices();
             
-            _stateMachine.Enter<MetaState>();
+            _stateMachine.Enter<CoreState>();
         }
         
         private async UniTask InitializeServices()
