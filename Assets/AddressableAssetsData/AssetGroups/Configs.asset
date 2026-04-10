@@ -21,7 +21,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a6bc42b252eaf948ac0c7649136b0c5
-    m_Address: Assets/GameAssets/StaticData/Gameplay/MergeConfig.asset
+    m_Address: MergeConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
