@@ -7,10 +7,7 @@ using Core.Services.AssetManagement;
 using Core.Services.StaticData;
 using Core.UI;
 using Cysharp.Threading.Tasks;
-using Domain.StaticData.Gameplay.Boosters;
 using Domain.StaticData.Gameplay.Cubes;
-using Domain.StaticData.Gameplay.Input;
-using Domain.StaticData.Gameplay.Merge;
 using Domain.StaticData.UI;
 using Domain.StaticData.UI.Canvas;
 using Domain.StaticData.UI.Popup;
@@ -26,9 +23,6 @@ namespace Infrastructure.Services.StaticData
         private readonly IAddressablesLoaderService _addressablesLoaderService;
 
         public CubeStaticData CubeConfig { get; private set; }
-        public InputStaticData InputConfig { get; private set; }
-        public MergeStaticData MergeConfig { get; private set; }
-        public AutoMergeBoosterStaticData AutoMergeBoosterConfig { get; private set; }
         
         public StaticDataService(IAddressablesLoaderService addressablesLoaderService) => 
             _addressablesLoaderService = addressablesLoaderService;
@@ -96,9 +90,6 @@ namespace Infrastructure.Services.StaticData
         private async UniTask InitializeGameplayConfigs()
         {
             CubeConfig = await _addressablesLoaderService.Load<CubeStaticData>(key: StaticDataPaths.CUBE_CONFIG);
-            InputConfig = await _addressablesLoaderService.Load<InputStaticData>(key: StaticDataPaths.INPUT_CONFIG);
-            MergeConfig = await _addressablesLoaderService.Load<MergeStaticData>(key: StaticDataPaths.MERGE_CONFIG);
-            AutoMergeBoosterConfig = await _addressablesLoaderService.Load<AutoMergeBoosterStaticData>(key: StaticDataPaths.AUTO_MERGE_BOOSTER_CONFIG);
         }
 
         #endregion
