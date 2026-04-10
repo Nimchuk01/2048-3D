@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
+using GameLogic.Gameplay.Board;
 using UnityEngine;
 
 namespace Core.Factories
 {
     public interface IBoardFactory
     {
-        UniTask<GameObject> CreateBoard(Transform parent = null);
+        UniTask<BoardEntity> CreateBoard();
     }
 }

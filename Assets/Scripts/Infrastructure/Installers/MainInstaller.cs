@@ -57,6 +57,7 @@ namespace Infrastructure.Installers
             Container.Bind<ICanvasFactory>().To<CanvasFactory>().AsSingle();
             Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
             Container.Bind<IBoardFactory>().To<BoardFactory>().AsSingle();
+            Container.Bind<ICubeFactory>().To<CubeFactory>().AsSingle();
         }
 
         private static void SetMaxFPSGame() => 

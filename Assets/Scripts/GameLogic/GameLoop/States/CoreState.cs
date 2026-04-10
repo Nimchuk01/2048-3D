@@ -4,8 +4,9 @@ using Core.Services.Scenes;
 using Core.UI.Management;
 using Cysharp.Threading.Tasks;
 using GameLogic.GameLoop.States.Interfaces;
+using GameLogic.Gameplay.Board;
+using GameLogic.Gameplay.Cubes;
 using Presentation.UI.Views.Screens.Gameplay;
-using UnityEngine;
 
 namespace GameLogic.GameLoop.States
 {
@@ -14,15 +15,18 @@ namespace GameLogic.GameLoop.States
         private readonly ISceneLoaderService _sceneLoaderService;
         private readonly UIManager _uiManager;
         private readonly IBoardFactory _boardFactory;
+        private readonly ICubeFactory _cubeFactory;
 
         public CoreState(
             ISceneLoaderService sceneLoaderService,
             UIManager uiManager,
-            IBoardFactory boardFactory)
+            IBoardFactory boardFactory,
+            ICubeFactory cubeFactory)
         {
             _sceneLoaderService = sceneLoaderService;
             _uiManager = uiManager;
             _boardFactory = boardFactory;
+            _cubeFactory = cubeFactory;
         }
 
         public async void Enter() => 
@@ -32,8 +36,10 @@ namespace GameLogic.GameLoop.States
 
         private async UniTask LoadCoreDependencies()
         {
-            GameObject board = await _boardFactory.CreateBoard();
-            
+            BoardEntity board = await _boardFactory.CreateBoard();
+
+            CubeEntity cube = await _cubeFactory.CreateCube(board.CubesParent);
+
             _uiManager.OpenScreen<GameplayHUDViewModel>();
         }
     }
