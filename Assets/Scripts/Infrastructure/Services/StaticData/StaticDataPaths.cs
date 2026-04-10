@@ -7,5 +7,6 @@
         public const string ROOT_CONFIG = "RootConfig";
         public const string SCREEN_CONFIG = "ScreenConfig";
         public const string CUBE_CONFIG = "CubeConfig";
+        public const string BOARD_CONFIG = "BoardConfig";
     }
 }

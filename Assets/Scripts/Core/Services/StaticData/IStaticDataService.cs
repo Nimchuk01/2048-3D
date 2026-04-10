@@ -1,6 +1,7 @@
 using System;
 using Core.Enums.UI;
 using Core.Services.Initialization;
+using Domain.StaticData.Gameplay.Board;
 using Domain.StaticData.Gameplay.Cubes;
 using Domain.StaticData.UI;
 
@@ -10,5 +11,6 @@ namespace Core.Services.StaticData
     {
         T GetUI<T>(UICategory category, Enum typeEnum) where T : class, IUIConfig;
         CubeStaticData CubeConfig { get; }
+        BoardStaticData BoardConfig { get; }
     }
 }

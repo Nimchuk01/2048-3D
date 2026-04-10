@@ -7,6 +7,7 @@ using Core.Services.AssetManagement;
 using Core.Services.StaticData;
 using Core.UI;
 using Cysharp.Threading.Tasks;
+using Domain.StaticData.Gameplay.Board;
 using Domain.StaticData.Gameplay.Cubes;
 using Domain.StaticData.UI;
 using Domain.StaticData.UI.Canvas;
@@ -23,6 +24,7 @@ namespace Infrastructure.Services.StaticData
         private readonly IAddressablesLoaderService _addressablesLoaderService;
 
         public CubeStaticData CubeConfig { get; private set; }
+        public BoardStaticData BoardConfig { get; private set; }
         
         public StaticDataService(IAddressablesLoaderService addressablesLoaderService) => 
             _addressablesLoaderService = addressablesLoaderService;
@@ -90,6 +92,7 @@ namespace Infrastructure.Services.StaticData
         private async UniTask InitializeGameplayConfigs()
         {
             CubeConfig = await _addressablesLoaderService.Load<CubeStaticData>(key: StaticDataPaths.CUBE_CONFIG);
+            BoardConfig = await _addressablesLoaderService.Load<BoardStaticData>(key: StaticDataPaths.BOARD_CONFIG);
         }
 
         #endregion

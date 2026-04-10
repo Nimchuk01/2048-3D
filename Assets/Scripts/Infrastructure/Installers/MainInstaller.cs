@@ -1,5 +1,6 @@
 ﻿using Core.Factories;
 using Core.Factories.UI;
+using Core.Services.Board;
 using Core.Logging;
 using Core.Services.Progress;
 using Core.Services.Scenes;
@@ -8,6 +9,7 @@ using Infrastructure.EntryPoint;
 using Infrastructure.Factories;
 using Infrastructure.Factories.UI;
 using Infrastructure.Services.AssetManagement;
+using Infrastructure.Services.Board;
 using Infrastructure.Services.Curtain;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.SceneLoader;
@@ -46,6 +48,7 @@ namespace Infrastructure.Installers
             Container.Bind<ISceneLoaderService>().To<SceneLoaderService>().AsSingle();
             Container.Bind<ISceneTransitionService>().To<SceneTransitionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionWatcher>().AsSingle();
+            Container.Bind<IBoardService>().To<BoardService>().AsSingle();
         }
 
         private void BindFactories()
@@ -53,6 +56,7 @@ namespace Infrastructure.Installers
             Container.Bind<IObjectPoolFactory>().To<ObjectPoolFactory>().AsSingle();
             Container.Bind<ICanvasFactory>().To<CanvasFactory>().AsSingle();
             Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
+            Container.Bind<IBoardFactory>().To<BoardFactory>().AsSingle();
         }
 
         private static void SetMaxFPSGame() => 
