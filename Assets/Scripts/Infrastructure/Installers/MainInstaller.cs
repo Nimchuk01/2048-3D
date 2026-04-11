@@ -1,6 +1,8 @@
 ﻿using Core.Factories;
 using Core.Factories.UI;
 using Core.Services.Board;
+using Core.Services.Cube;
+using Core.Services.Input;
 using Core.Logging;
 using Core.Services.Progress;
 using Core.Services.Scenes;
@@ -8,9 +10,12 @@ using Core.Services.SceneTransition;
 using Infrastructure.EntryPoint;
 using Infrastructure.Factories;
 using Infrastructure.Factories.UI;
+using Infrastructure.Input;
 using Infrastructure.Services.AssetManagement;
 using Infrastructure.Services.Board;
+using Infrastructure.Services.Cube;
 using Infrastructure.Services.Curtain;
+using Infrastructure.Services.Input;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.SceneLoader;
 using Infrastructure.Services.SceneTransition;
@@ -49,6 +54,17 @@ namespace Infrastructure.Installers
             Container.Bind<ISceneTransitionService>().To<SceneTransitionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionWatcher>().AsSingle();
             Container.Bind<IBoardService>().To<BoardService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CubeService>().AsSingle().NonLazy();
+            
+            BindPointerInput();
+        }
+
+        private void BindPointerInput()
+        {
+            if (Application.isMobilePlatform)
+                Container.Bind<IPointerInput>().To<TouchPointerInput>().AsSingle();
+            else
+                Container.Bind<IPointerInput>().To<MousePointerInput>().AsSingle();
         }
 
         private void BindFactories()

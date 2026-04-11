@@ -11,7 +11,8 @@ namespace Domain.StaticData.Gameplay.Cubes
         [Range(0f, 1f)] public float SpawnChanceFor2 = 0.75f;
         [Range(0f, 1f)] public float SpawnChanceFor4 = 0.25f;
         
-        [Min(0f)] public float LaunchForce = 12f;
+        [Min(0f)] public float MinLaunchForce = 10f;
+        [Min(0f)] public float MaxLaunchForce = 15f;
         [Min(0f)] public float SpawnCooldown = 0.2f;
     }
 }

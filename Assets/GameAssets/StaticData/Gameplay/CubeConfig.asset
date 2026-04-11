@@ -20,5 +20,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   SpawnChanceFor2: 0.75
   SpawnChanceFor4: 0.25
-  LaunchForce: 12
+  MinLaunchForce: 13
+  MaxLaunchForce: 17
   SpawnCooldown: 0.2

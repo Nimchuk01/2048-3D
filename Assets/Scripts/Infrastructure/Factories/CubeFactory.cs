@@ -1,5 +1,6 @@
 using Core.Factories;
 using Core.Services.AssetManagement;
+using Core.Services.Cube;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
@@ -14,15 +15,18 @@ namespace Infrastructure.Factories
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IAddressablesLoaderService _addressablesLoaderService;
+        private readonly ICubeService _cubeService;
         private readonly DiContainer _container;
 
         public CubeFactory(
             IStaticDataService staticDataService,
             IAddressablesLoaderService addressablesLoaderService,
+            ICubeService cubeService,
             DiContainer container)
         {
             _staticDataService = staticDataService;
             _addressablesLoaderService = addressablesLoaderService;
+            _cubeService = cubeService;
             _container = container;
         }
 
@@ -41,6 +45,8 @@ namespace Infrastructure.Factories
             CubeEntity cube = cubeObject.GetComponent<CubeEntity>();
             int value = GetInitialValue(config);
             cube.Initialize(value);
+            
+            _cubeService.SetActiveCube(cube);
 
             return cube;
         }

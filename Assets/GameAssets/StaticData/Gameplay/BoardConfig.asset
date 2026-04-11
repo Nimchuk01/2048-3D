@@ -18,4 +18,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  CubeSpawnPosition: {x: 0, y: 0.5, z: -6.765}
+  BoardHalfWidth: 3.4

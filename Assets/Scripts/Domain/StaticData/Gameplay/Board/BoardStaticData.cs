@@ -7,5 +7,6 @@ namespace Domain.StaticData.Gameplay.Board
     public class BoardStaticData : ScriptableObject
     {
         public AssetReference BoardPrefab;
+        public float BoardHalfWidth = 1.5f;
     }
 }
