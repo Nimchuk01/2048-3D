@@ -22,4 +22,7 @@ MonoBehaviour:
   SpawnChanceFor4: 0.25
   MinLaunchForce: 13
   MaxLaunchForce: 17
-  SpawnCooldown: 0.2
+  SpawnCooldown: 0.5
+  MinCubeCount: 5
+  MaxCubeCount: 10
+  PossibleValues: 02000000040000000800000010000000

@@ -8,6 +8,7 @@ using GameLogic.Gameplay.Cubes;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Infrastructure.Factories
 {
@@ -30,7 +31,7 @@ namespace Infrastructure.Factories
             _container = container;
         }
 
-        public async UniTask<CubeEntity> CreateCube(Transform parent)
+        public async UniTask<CubeEntity> CreateCube(Transform parent, bool isBoardCube = false)
         {
             CubeStaticData config = _staticDataService.CubeConfig;
 
@@ -43,15 +44,24 @@ namespace Infrastructure.Factories
             _container.InjectGameObject(cubeObject);
 
             CubeEntity cube = cubeObject.GetComponent<CubeEntity>();
-            int value = GetInitialValue(config);
+            int value = isBoardCube ? GetBoardCubeValue(config) : GetSpawnCubeValue(config);
             cube.Initialize(value);
             
-            _cubeService.SetActiveCube(cube);
+            if (!isBoardCube)
+                _cubeService.SetActiveCube(cube);
 
             return cube;
         }
 
-        private int GetInitialValue(CubeStaticData config)
+        private int GetBoardCubeValue(CubeStaticData config)
+        {
+            int[] values = config.PossibleValues;
+            if (values == null || values.Length == 0)
+                return 2;
+            return values[Random.Range(0, values.Length)];
+        }
+
+        private int GetSpawnCubeValue(CubeStaticData config)
         {
             return Random.value < config.SpawnChanceFor2 ? 2 : 4;
         }

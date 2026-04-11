@@ -37,9 +37,9 @@ namespace GameLogic.GameLoop.States
         private async UniTask LoadCoreDependencies()
         {
             BoardEntity board = await _boardFactory.CreateBoard();
-
-            CubeEntity cube = await _cubeFactory.CreateCube(board.CubesParent);
-
+            
+            await _cubeFactory.CreateCube(board.CubesParent, isBoardCube: false);
+            
             _uiManager.OpenScreen<GameplayHUDViewModel>();
         }
     }

@@ -6,6 +6,6 @@ namespace Core.Factories
 {
     public interface ICubeFactory
     {
-        UniTask<CubeEntity> CreateCube(Transform parent);
+        UniTask<CubeEntity> CreateCube(Transform parent, bool isBoardCube = false);
     }
 }

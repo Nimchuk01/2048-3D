@@ -1,12 +1,17 @@
+using System.Collections.Generic;
+using System.Linq;
 using Core.Factories;
 using Core.Services.AssetManagement;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Board;
+using Domain.StaticData.Gameplay.Cubes;
 using GameLogic.Gameplay.Board;
+using GameLogic.Gameplay.Cubes;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Infrastructure.Factories
 {
@@ -14,15 +19,18 @@ namespace Infrastructure.Factories
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IAddressablesLoaderService _addressablesLoaderService;
+        private readonly ICubeFactory _cubeFactory;
         private readonly DiContainer _container;
 
         public BoardFactory(
             IStaticDataService staticDataService, 
             IAddressablesLoaderService addressablesLoaderService,
+            ICubeFactory cubeFactory,
             DiContainer container)
         {
             _staticDataService = staticDataService;
             _addressablesLoaderService = addressablesLoaderService;
+            _cubeFactory = cubeFactory;
             _container = container;
         }
 
@@ -36,7 +44,32 @@ namespace Infrastructure.Factories
             
             _container.InjectGameObject(board);
             
-            return board.GetComponent<BoardEntity>();
+            BoardEntity boardEntity = board.GetComponent<BoardEntity>();
+            
+            await SpawnCubes(boardEntity);
+            
+            return boardEntity;
+        }
+        
+        private async UniTask SpawnCubes(BoardEntity board)
+        {
+            CubeStaticData cubeConfig = _staticDataService.CubeConfig;
+            int cubeCount = Random.Range(cubeConfig.MinCubeCount, cubeConfig.MaxCubeCount);
+            
+            List<Transform> availablePoints = board.StartCubeSpawnPoints.ToList();
+            
+            for (int i = 0; i < cubeCount; i++)
+            {
+                if (availablePoints.Count == 0)
+                    break;
+                
+                int randomIndex = Random.Range(0, availablePoints.Count);
+                Transform spawnPoint = availablePoints[randomIndex];
+                availablePoints.RemoveAt(randomIndex);
+                
+                CubeEntity cube = await _cubeFactory.CreateCube(board.CubesParent, isBoardCube: true);
+                cube.transform.position = spawnPoint.position;
+            }
         }
     }
 }
