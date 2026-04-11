@@ -1,7 +1,9 @@
 using System;
+using Core.Factories;
 using Core.Services.Cube;
 using Core.Services.Input;
 using Core.Services.StaticData;
+using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
 using GameLogic.Gameplay.Cubes;
 using UnityEngine;
@@ -14,11 +16,13 @@ namespace Infrastructure.Services.Cube
     {
         private readonly IPointerInput _inputService;
         private readonly IStaticDataService _staticDataService;
+        private readonly ICubeFactory _cubeFactory;
         
         public CubeEntity ActiveCube { get; private set; }
         public bool IsDragging { get; private set; }
         private Rigidbody _rigidbody;
         private Camera _mainCamera;
+        private Transform _cubesParent;
         
         private Camera MainCamera => _mainCamera ??= Camera.main;
         
@@ -26,10 +30,12 @@ namespace Infrastructure.Services.Cube
 
         public CubeService(
             IPointerInput inputService,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService,
+            ICubeFactory cubeFactory)
         {
             _inputService = inputService;
             _staticDataService = staticDataService;
+            _cubeFactory = cubeFactory;
         }
 
         public void Initialize()
@@ -37,6 +43,15 @@ namespace Infrastructure.Services.Cube
             _inputService.PointerDown += OnPointerDown;
             _inputService.PointerMove += OnPointerMove;
             _inputService.PointerUp += OnPointerUp;
+        }
+        
+        public void SetCubesParent(Transform cubesParent) => 
+            _cubesParent = cubesParent;
+        
+        public async UniTask SpawnPlayerCube()
+        {
+            CubeEntity cube = await _cubeFactory.CreateCube(_cubesParent, isBoardCube: false);
+            SetActiveCube(cube);
         }
 
         public void Dispose()
@@ -53,7 +68,8 @@ namespace Infrastructure.Services.Cube
                 ActiveCube = null;
         }
 
-        public void SetActiveCube(CubeEntity cube) => ActiveCube = cube;
+        private void SetActiveCube(CubeEntity cube) 
+            => ActiveCube = cube;
 
         private void OnPointerDown(Vector3 screenPosition)
         {
@@ -123,6 +139,15 @@ namespace Infrastructure.Services.Cube
             
             ActiveCube = null;
             _rigidbody = null;
+            
+            SpawnNextCubeAfterCooldown().Forget();
+        }
+        
+        private async UniTask SpawnNextCubeAfterCooldown()
+        {
+            CubeStaticData config = _staticDataService.CubeConfig;
+            await UniTask.Delay((int)(config.SpawnCooldown * 1000));
+            await SpawnPlayerCube();
         }
 
     }

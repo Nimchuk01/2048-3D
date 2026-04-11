@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using GameLogic.Gameplay.Cubes;
 using UnityEngine;
 
@@ -10,10 +11,11 @@ namespace Core.Services.Cube
         
         void RegisterCube(CubeEntity cube);
         void UnregisterCube(CubeEntity cube);
-        void SetActiveCube(CubeEntity cube);
         
         void StartDrag(Vector3 screenPosition);
         void Drag(Vector3 screenPosition);
         void EndDrag();
+        void SetCubesParent(Transform cubesParent);
+        UniTask SpawnPlayerCube();
     }
 }
