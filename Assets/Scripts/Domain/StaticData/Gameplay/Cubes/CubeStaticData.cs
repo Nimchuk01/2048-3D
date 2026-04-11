@@ -14,6 +14,7 @@ namespace Domain.StaticData.Gameplay.Cubes
         [Min(0f)] public float MinLaunchForce = 10f;
         [Min(0f)] public float MaxLaunchForce = 15f;
         [Min(0f)] public float SpawnCooldown = 0.2f;
+        [Min(0f)] public float MergeVelocityThreshold = 3f;
         
         [Min(1)] public int MinCubeCount = 5;
         [Min(1)] public int MaxCubeCount = 8;

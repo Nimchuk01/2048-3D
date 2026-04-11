@@ -3,6 +3,7 @@ using Core.Factories.UI;
 using Core.Services.Board;
 using Core.Services.Cube;
 using Core.Services.Input;
+using Core.Services.Merge;
 using Core.Logging;
 using Core.Services.Progress;
 using Core.Services.Scenes;
@@ -16,6 +17,7 @@ using Infrastructure.Services.Board;
 using Infrastructure.Services.Cube;
 using Infrastructure.Services.Curtain;
 using Infrastructure.Services.Input;
+using Infrastructure.Services.Merge;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.SceneLoader;
 using Infrastructure.Services.SceneTransition;
@@ -55,6 +57,7 @@ namespace Infrastructure.Installers
             Container.BindInterfacesAndSelfTo<SceneTransitionWatcher>().AsSingle();
             Container.Bind<IBoardService>().To<BoardService>().AsSingle();
             Container.BindInterfacesAndSelfTo<CubeService>().AsSingle().NonLazy();
+            Container.Bind<IMergeService>().To<MergeService>().AsSingle();
             
             BindPointerInput();
         }
