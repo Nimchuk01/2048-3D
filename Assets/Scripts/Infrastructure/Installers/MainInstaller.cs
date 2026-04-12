@@ -5,9 +5,11 @@ using Core.Services.Cube;
 using Core.Services.Input;
 using Core.Services.Merge;
 using Core.Logging;
+using Core.Services.GameOver;
 using Core.Services.Progress;
 using Core.Services.Scenes;
 using Core.Services.SceneTransition;
+using Core.Services.Score;
 using Infrastructure.EntryPoint;
 using Infrastructure.Factories;
 using Infrastructure.Factories.UI;
@@ -16,11 +18,13 @@ using Infrastructure.Services.AssetManagement;
 using Infrastructure.Services.Board;
 using Infrastructure.Services.Cube;
 using Infrastructure.Services.Curtain;
+using Infrastructure.Services.GameOver;
 using Infrastructure.Services.Input;
 using Infrastructure.Services.Merge;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.SceneLoader;
 using Infrastructure.Services.SceneTransition;
+using Infrastructure.Services.Score;
 using Infrastructure.Services.StaticData;
 using UnityEngine;
 using Zenject;
@@ -58,6 +62,9 @@ namespace Infrastructure.Installers
             Container.Bind<IBoardService>().To<BoardService>().AsSingle();
             Container.BindInterfacesAndSelfTo<CubeService>().AsSingle().NonLazy();
             Container.Bind<IMergeService>().To<MergeService>().AsSingle();
+            Container.Bind<IScoreService>().To<ScoreService>().AsSingle();
+            Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameOverWatcher>().AsSingle();
             
             BindPointerInput();
         }

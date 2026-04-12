@@ -3,7 +3,6 @@
     public enum PopupType
     {
         None = 0,
-        RewardPopup = 1,
-        SettingsPopup = 2,
+        GameOver = 1,
     }
 }

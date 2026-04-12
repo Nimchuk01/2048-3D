@@ -1,17 +1,23 @@
 ﻿using Core.UI.Common;
+using R3;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Presentation.UI.Views.Screens.Gameplay
 {
     public class GameplayHUDView : UIView<GameplayHUDViewModel>
     {
-        [SerializeField] private Button _menuButton;
+        [SerializeField] private TMP_Text _scoreLabel;
+
+        private readonly CompositeDisposable _disposables = new();
         
         protected override void OnBind(GameplayHUDViewModel vm) => 
-            _menuButton.onClick.AddListener(vm.GoToMenu);
+            vm.Score.Subscribe(UpdateScore).AddTo(_disposables);
+
+        private void UpdateScore(int score) => 
+            _scoreLabel.text = $"Score: {score}";
 
         private void OnDestroy() => 
-            _menuButton.onClick.RemoveAllListeners();
+            _disposables.Dispose();
     }
 }

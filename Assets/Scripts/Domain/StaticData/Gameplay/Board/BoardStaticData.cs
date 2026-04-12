@@ -8,5 +8,6 @@ namespace Domain.StaticData.Gameplay.Board
     {
         public AssetReference BoardPrefab;
         public float BoardHalfWidth = 1.5f;
+        [Min(1)] public int MaxCubesLimit = 15;
     }
 }

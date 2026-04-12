@@ -15,15 +15,8 @@ MonoBehaviour:
   Configs:
   - Type: 1
     Prefab:
-      m_AssetGUID: 329b3084095a4cd41ba24dfda4cce449
+      m_AssetGUID: 490823f768df40a4eb66de6239db7d56
       m_SubObjectName: 
-      m_SubObjectGUID: 
       m_SubObjectType: 
+      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-  - Type: 2
-    Prefab:
-      m_AssetGUID: b6b9a05b66c9bcf42b55c81609d18780
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 1

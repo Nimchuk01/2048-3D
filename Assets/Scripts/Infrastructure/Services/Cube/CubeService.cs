@@ -17,21 +17,18 @@ namespace Infrastructure.Services.Cube
         private readonly IPointerInput _inputService;
         private readonly IStaticDataService _staticDataService;
         private readonly ICubeFactory _cubeFactory;
-        
-        public CubeEntity ActiveCube { get; private set; }
-        public bool IsDragging { get; private set; }
+
+        private bool _isDragging;
+        private CubeEntity _activeCube;
         private Rigidbody _rigidbody;
         private Camera _mainCamera;
         private Transform _cubesParent;
         
         private Camera MainCamera => _mainCamera ??= Camera.main;
         
-        private float BoardHalfWidth => _staticDataService.BoardConfig?.BoardHalfWidth ?? 1.5f;
+        private float BoardHalfWidth => _staticDataService.BoardConfig.BoardHalfWidth;
 
-        public CubeService(
-            IPointerInput inputService,
-            IStaticDataService staticDataService,
-            ICubeFactory cubeFactory)
+        public CubeService(IPointerInput inputService, IStaticDataService staticDataService, ICubeFactory cubeFactory)
         {
             _inputService = inputService;
             _staticDataService = staticDataService;
@@ -61,27 +58,20 @@ namespace Infrastructure.Services.Cube
             _inputService.PointerUp -= OnPointerUp;
         }
 
-        public void RegisterCube(CubeEntity cube) { }
-        public void UnregisterCube(CubeEntity cube) 
-        { 
-            if (ActiveCube == cube)
-                ActiveCube = null;
-        }
-
         private void SetActiveCube(CubeEntity cube) 
-            => ActiveCube = cube;
+            => _activeCube = cube;
 
         private void OnPointerDown(Vector3 screenPosition)
         {
-            if (ActiveCube == null) 
+            if (_activeCube == null) 
                 return;
             
-            StartDrag(screenPosition);
+            StartDrag();
         }
 
         private void OnPointerMove(Vector3 screenPosition)
         {
-            if (!IsDragging) 
+            if (!_isDragging) 
                 return;
             
             Drag(screenPosition);
@@ -89,29 +79,29 @@ namespace Infrastructure.Services.Cube
 
         private void OnPointerUp(Vector3 screenPosition)
         {
-            if (!IsDragging) 
+            if (!_isDragging) 
                 return;
             
             EndDrag();
         }
 
-        public void StartDrag(Vector3 screenPosition)
+        private void StartDrag()
         {
-            if (ActiveCube == null) 
+            if (_activeCube == null) 
                 return;
 
-            IsDragging = true;
-            _rigidbody = ActiveCube.Rigidbody;
+            _isDragging = true;
+            _rigidbody = _activeCube.Rigidbody;
             _rigidbody.isKinematic = true;
         }
 
-        public void Drag(Vector3 screenPosition)
+        private void Drag(Vector3 screenPosition)
         {
-            if (ActiveCube == null || !IsDragging) 
+            if (_activeCube == null || !_isDragging) 
                 return;
 
             Ray ray = MainCamera.ScreenPointToRay(screenPosition);
-            Plane plane = new Plane(Vector3.up, ActiveCube.transform.position);
+            Plane plane = new Plane(Vector3.up, _activeCube.transform.position);
 
             if (plane.Raycast(ray, out float distance))
             {
@@ -119,25 +109,25 @@ namespace Infrastructure.Services.Cube
                 float boardHalfWidth = BoardHalfWidth;
                 float newX = Mathf.Clamp(worldPoint.x, -boardHalfWidth, boardHalfWidth);
 
-                Vector3 newPosition = ActiveCube.transform.position;
+                Vector3 newPosition = _activeCube.transform.position;
                 newPosition.x = newX;
-                ActiveCube.transform.position = newPosition;
+                _activeCube.transform.position = newPosition;
             }
         }
 
-        public void EndDrag()
+        private void EndDrag()
         {
-            if (ActiveCube == null) 
+            if (_activeCube == null) 
                 return;
 
-            IsDragging = false;
+            _isDragging = false;
             _rigidbody.isKinematic = false;
                 
             CubeStaticData config = _staticDataService.CubeConfig;
             float force = Random.Range(config.MinLaunchForce, config.MaxLaunchForce);
             _rigidbody.AddForce(Vector3.forward * force, ForceMode.Impulse);
             
-            ActiveCube = null;
+            _activeCube = null;
             _rigidbody = null;
             
             SpawnNextCubeAfterCooldown().Forget();

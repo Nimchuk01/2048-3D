@@ -19,3 +19,4 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   BoardHalfWidth: 3.4
+  MaxCubesLimit: 100

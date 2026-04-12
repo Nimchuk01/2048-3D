@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: UI
   m_GUID: 2f68d950229a96c4dbae66d0d4cba690
   m_SerializeEntries:
+  - m_GUID: 490823f768df40a4eb66de6239db7d56
+    m_Address: GameOverPopup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 76cd6f9b77bd50543903efe83ffa15a9
     m_Address: CurtainCanvas
     m_ReadOnly: 0

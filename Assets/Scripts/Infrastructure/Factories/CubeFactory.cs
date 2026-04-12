@@ -1,5 +1,6 @@
 using Core.Factories;
 using Core.Services.AssetManagement;
+using Core.Services.GameOver;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
@@ -15,15 +16,18 @@ namespace Infrastructure.Factories
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IAddressablesLoaderService _addressablesLoaderService;
+        private readonly IGameOverService _gameOverService;
         private readonly DiContainer _container;
 
         public CubeFactory(
             IStaticDataService staticDataService,
             IAddressablesLoaderService addressablesLoaderService,
+            IGameOverService gameOverService,
             DiContainer container)
         {
             _staticDataService = staticDataService;
             _addressablesLoaderService = addressablesLoaderService;
+            _gameOverService = gameOverService;
             _container = container;
         }
 
@@ -42,6 +46,8 @@ namespace Infrastructure.Factories
             CubeEntity cube = cubeObject.GetComponent<CubeEntity>();
             int value = isBoardCube ? GetBoardCubeValue(config) : GetSpawnCubeValue(config);
             cube.Initialize(value);
+
+            _gameOverService.RegisterCube();
 
             return cube;
         }
