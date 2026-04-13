@@ -1,4 +1,5 @@
 using Core.Factories;
+using Core.Services.Boosters;
 using Core.Services.GameOver;
 using Core.Services.Merge;
 using Core.Services.Score;
@@ -16,17 +17,20 @@ namespace Infrastructure.Services.Merge
         private readonly ICubeFactory _cubeFactory;
         private readonly IScoreService _scoreService;
         private readonly IGameOverService _gameOverService;
+        private readonly ICubeTracker _cubeTracker;
 
         public MergeService(
             IStaticDataService staticDataService,
             ICubeFactory cubeFactory,
             IScoreService scoreService,
-            IGameOverService gameOverService)
+            IGameOverService gameOverService,
+            ICubeTracker cubeTracker)
         {
             _staticDataService = staticDataService;
             _cubeFactory = cubeFactory;
             _scoreService = scoreService;
             _gameOverService = gameOverService;
+            _cubeTracker = cubeTracker;
         }
 
         public bool CanMerge(CubeEntity source, CubeEntity target, float relativeVelocityMagnitude)
@@ -52,6 +56,7 @@ namespace Infrastructure.Services.Merge
         private void DisableCube(CubeEntity cube)
         {
             _gameOverService.UnregisterCube();
+            _cubeTracker.Unregister(cube);
             cube.gameObject.SetActive(false);
             Object.Destroy(cube.gameObject);
         }

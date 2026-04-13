@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
 using GameLogic.Gameplay.Cubes;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -64,6 +65,9 @@ namespace Infrastructure.Services.Cube
         private void OnPointerDown(Vector3 screenPosition)
         {
             if (_activeCube == null) 
+                return;
+            
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
             
             StartDrag();

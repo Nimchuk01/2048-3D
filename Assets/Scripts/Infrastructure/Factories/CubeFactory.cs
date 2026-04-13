@@ -1,5 +1,6 @@
 using Core.Factories;
 using Core.Services.AssetManagement;
+using Core.Services.Boosters;
 using Core.Services.GameOver;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
@@ -17,17 +18,20 @@ namespace Infrastructure.Factories
         private readonly IStaticDataService _staticDataService;
         private readonly IAddressablesLoaderService _addressablesLoaderService;
         private readonly IGameOverService _gameOverService;
+        private readonly ICubeTracker _cubeTracker;
         private readonly DiContainer _container;
 
         public CubeFactory(
             IStaticDataService staticDataService,
             IAddressablesLoaderService addressablesLoaderService,
             IGameOverService gameOverService,
+            ICubeTracker cubeTracker,
             DiContainer container)
         {
             _staticDataService = staticDataService;
             _addressablesLoaderService = addressablesLoaderService;
             _gameOverService = gameOverService;
+            _cubeTracker = cubeTracker;
             _container = container;
         }
 
@@ -48,6 +52,7 @@ namespace Infrastructure.Factories
             cube.Initialize(value);
 
             _gameOverService.RegisterCube();
+            _cubeTracker.Register(cube);
 
             return cube;
         }

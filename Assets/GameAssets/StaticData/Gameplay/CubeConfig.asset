@@ -23,6 +23,8 @@ MonoBehaviour:
   MinLaunchForce: 13
   MaxLaunchForce: 17
   SpawnCooldown: 0.5
+  MergeVelocityThreshold: 3
+  AutoMergeCooldown: 20
   MinCubeCount: 5
   MaxCubeCount: 10
   PossibleValues: 02000000040000000800000010000000

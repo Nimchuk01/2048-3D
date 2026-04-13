@@ -9,12 +9,14 @@ namespace GameLogic.Gameplay.Cubes
     {
         [SerializeField] private TMP_Text[] _valueLabels;
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Collider _collider;
         
         private int _value;
         private IMergeService _mergeService;
         private bool _isMerging;
         
         public Rigidbody Rigidbody => _rigidbody;
+        public Collider Collider => _collider;
         public int Value => _value;
         public bool IsMerging => _isMerging;
 

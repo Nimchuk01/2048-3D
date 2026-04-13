@@ -841,6 +841,7 @@ MonoBehaviour:
   - {fileID: 779696786010367037}
   - {fileID: 8717574651105736871}
   _rigidbody: {fileID: 2420454302824845317}
+  _collider: {fileID: 5526938956011161489}
 --- !u!1 &7927978021432842058
 GameObject:
   m_ObjectHideFlags: 0

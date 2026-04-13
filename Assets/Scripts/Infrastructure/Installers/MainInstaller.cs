@@ -5,6 +5,7 @@ using Core.Services.Cube;
 using Core.Services.Input;
 using Core.Services.Merge;
 using Core.Logging;
+using Core.Services.Boosters;
 using Core.Services.GameOver;
 using Core.Services.Progress;
 using Core.Services.Scenes;
@@ -16,6 +17,7 @@ using Infrastructure.Factories.UI;
 using Infrastructure.Input;
 using Infrastructure.Services.AssetManagement;
 using Infrastructure.Services.Board;
+using Infrastructure.Services.Boosters;
 using Infrastructure.Services.Cube;
 using Infrastructure.Services.Curtain;
 using Infrastructure.Services.GameOver;
@@ -65,6 +67,8 @@ namespace Infrastructure.Installers
             Container.Bind<IScoreService>().To<ScoreService>().AsSingle();
             Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameOverWatcher>().AsSingle();
+            Container.Bind<IBoosterService>().To<BoosterService>().AsSingle();
+            Container.Bind<ICubeTracker>().To<CubeTracker>().AsSingle();
             
             BindPointerInput();
         }
