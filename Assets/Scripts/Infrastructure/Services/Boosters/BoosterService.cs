@@ -4,6 +4,7 @@ using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GameLogic.Gameplay.Cubes;
+using Infrastructure.Services.Timing;
 using R3;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ namespace Infrastructure.Services.Boosters
 
             while (_remainingCooldown.CurrentValue > 0)
             {
-                await UniTask.Delay(1000, cancellationToken: token);
+                await Wait.Seconds(1f, token);
                 _remainingCooldown.Value = Mathf.Max(0, _remainingCooldown.CurrentValue - 1f);
             }
 
@@ -123,7 +124,7 @@ namespace Infrastructure.Services.Boosters
             var sourceTween = source.transform.DOShakePosition(shakeDuration, strength: 0.3f, vibrato: 8, randomness: 45f);
             var targetTween = target.transform.DOShakePosition(shakeDuration, strength: 0.3f, vibrato: 8, randomness: 45f);
 
-            await UniTask.Delay((int)(shakeDuration * 1000), cancellationToken: token);
+            await Wait.Seconds(shakeDuration, token);
 
             sourceTween.Kill();
             targetTween.Kill();

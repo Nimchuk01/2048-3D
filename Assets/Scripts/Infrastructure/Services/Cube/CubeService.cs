@@ -6,6 +6,7 @@ using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
 using GameLogic.Gameplay.Cubes;
+using Infrastructure.Services.Timing;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -140,7 +141,7 @@ namespace Infrastructure.Services.Cube
         private async UniTask SpawnNextCubeAfterCooldown()
         {
             CubeStaticData config = _staticDataService.CubeConfig;
-            await UniTask.Delay((int)(config.SpawnCooldown * 1000));
+            await Wait.Seconds(config.SpawnCooldown);
             await SpawnPlayerCube();
         }
 
