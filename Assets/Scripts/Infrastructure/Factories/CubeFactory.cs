@@ -2,13 +2,13 @@ using Core.Factories;
 using Core.Services.AssetManagement;
 using Core.Services.Boosters;
 using Core.Services.GameOver;
+using Core.Services.ObjectPool;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
 using GameLogic.Gameplay.Cubes;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Infrastructure.Factories
@@ -19,19 +19,23 @@ namespace Infrastructure.Factories
         private readonly IAddressablesLoaderService _addressablesLoaderService;
         private readonly IGameOverService _gameOverService;
         private readonly ICubeTracker _cubeTracker;
+        private readonly IObjectPoolFactory _objectPoolFactory;
         private readonly DiContainer _container;
+        private IObjectPoolService<CubeEntity> _pool;
 
         public CubeFactory(
             IStaticDataService staticDataService,
             IAddressablesLoaderService addressablesLoaderService,
             IGameOverService gameOverService,
             ICubeTracker cubeTracker,
+            IObjectPoolFactory objectPoolFactory,
             DiContainer container)
         {
             _staticDataService = staticDataService;
             _addressablesLoaderService = addressablesLoaderService;
             _gameOverService = gameOverService;
             _cubeTracker = cubeTracker;
+            _objectPoolFactory = objectPoolFactory;
             _container = container;
         }
 
@@ -40,14 +44,17 @@ namespace Infrastructure.Factories
             CubeStaticData config = _staticDataService.CubeConfig;
 
             GameObject prefab = await _addressablesLoaderService.Load<GameObject>(config.CubePrefab);
+            CubeEntity prefabCube = prefab.GetComponent<CubeEntity>();
+            
+            _pool = _objectPoolFactory.GetOrCreatePool(prefabCube, parent);
+            CubeEntity cube = _pool.Get();
+            
+            cube.transform.SetParent(parent);
+            cube.transform.localPosition = Vector3.zero;
+            cube.transform.localRotation = Quaternion.identity;
 
-            GameObject cubeObject = Object.Instantiate(prefab, parent);
-            cubeObject.transform.localPosition = Vector3.zero;
-            cubeObject.transform.localRotation = Quaternion.identity;
+            _container.InjectGameObject(cube.gameObject);
 
-            _container.InjectGameObject(cubeObject);
-
-            CubeEntity cube = cubeObject.GetComponent<CubeEntity>();
             int value = isBoardCube ? GetBoardCubeValue(config) : GetSpawnCubeValue(config);
             cube.Initialize(value);
 
@@ -55,6 +62,30 @@ namespace Infrastructure.Factories
             _cubeTracker.Register(cube);
 
             return cube;
+        }
+
+        public void ReturnCube(CubeEntity cube)
+        {
+            _gameOverService.UnregisterCube();
+            _cubeTracker.Unregister(cube);
+            
+            var rb = cube.Rigidbody;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = false;
+            
+            cube.gameObject.SetActive(false);
+            _pool?.Return(cube);
+        }
+
+        public async UniTask Preload(Transform parent, int count = 20)
+        {
+            CubeStaticData config = _staticDataService.CubeConfig;
+            GameObject prefab = await _addressablesLoaderService.Load<GameObject>(config.CubePrefab);
+            CubeEntity prefabCube = prefab.GetComponent<CubeEntity>();
+            
+            _pool = _objectPoolFactory.GetOrCreatePool(prefabCube, parent);
+            _pool.Preload(count);
         }
 
         private int GetBoardCubeValue(CubeStaticData config)

@@ -32,7 +32,7 @@ namespace Presentation.UI.Views.Screens.Gameplay
             $"Score: {score}";
        
         public string GetAutoMergeButtonText(float remainingSeconds) => 
-            remainingSeconds > 0 ? $"{Mathf.CeilToInt(remainingSeconds)}s" : AUTO_MERGE_LABEL;
+            remainingSeconds > 0 ? $"{Mathf.CeilToInt(remainingSeconds)} s" : AUTO_MERGE_LABEL;
 
         public async UniTaskVoid ActivateAutoMerge()
         {

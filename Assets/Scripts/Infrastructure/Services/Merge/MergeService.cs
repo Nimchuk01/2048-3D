@@ -1,13 +1,10 @@
 using Core.Factories;
-using Core.Services.Boosters;
-using Core.Services.GameOver;
 using Core.Services.Merge;
 using Core.Services.Score;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using GameLogic.Gameplay.Cubes;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Infrastructure.Services.Merge
 {
@@ -16,21 +13,15 @@ namespace Infrastructure.Services.Merge
         private readonly IStaticDataService _staticDataService;
         private readonly ICubeFactory _cubeFactory;
         private readonly IScoreService _scoreService;
-        private readonly IGameOverService _gameOverService;
-        private readonly ICubeTracker _cubeTracker;
 
         public MergeService(
             IStaticDataService staticDataService,
             ICubeFactory cubeFactory,
-            IScoreService scoreService,
-            IGameOverService gameOverService,
-            ICubeTracker cubeTracker)
+            IScoreService scoreService)
         {
             _staticDataService = staticDataService;
             _cubeFactory = cubeFactory;
             _scoreService = scoreService;
-            _gameOverService = gameOverService;
-            _cubeTracker = cubeTracker;
         }
 
         public bool CanMerge(CubeEntity source, CubeEntity target, float relativeVelocityMagnitude)
@@ -55,10 +46,7 @@ namespace Infrastructure.Services.Merge
 
         private void DisableCube(CubeEntity cube)
         {
-            _gameOverService.UnregisterCube();
-            _cubeTracker.Unregister(cube);
-            cube.gameObject.SetActive(false);
-            Object.Destroy(cube.gameObject);
+            _cubeFactory.ReturnCube(cube);
         }
 
         private async UniTask SpawnMergedCube(Vector3 position, int value, Transform parent)

@@ -7,5 +7,7 @@ namespace Core.Factories
     public interface ICubeFactory
     {
         UniTask<CubeEntity> CreateCube(Transform parent, bool isBoardCube = false);
+        void ReturnCube(CubeEntity cube);
+        UniTask Preload(Transform parent, int count = 20);
     }
 }

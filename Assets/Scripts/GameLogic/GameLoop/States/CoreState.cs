@@ -16,17 +16,20 @@ namespace GameLogic.GameLoop.States
         private readonly UIManager _uiManager;
         private readonly IBoardFactory _boardFactory;
         private readonly ICubeService _cubeService;
+        private readonly ICubeFactory _cubeFactory;
 
         public CoreState(
             ISceneLoaderService sceneLoaderService,
             UIManager uiManager,
             IBoardFactory boardFactory,
-            ICubeService cubeService)
+            ICubeService cubeService,
+            ICubeFactory cubeFactory)
         {
             _sceneLoaderService = sceneLoaderService;
             _uiManager = uiManager;
             _boardFactory = boardFactory;
             _cubeService = cubeService;
+            _cubeFactory = cubeFactory;
         }
 
         public async void Enter() => 
@@ -37,6 +40,8 @@ namespace GameLogic.GameLoop.States
         private async UniTask LoadCoreDependencies()
         {
             BoardEntity board = await _boardFactory.CreateBoard();
+            
+            await _cubeFactory.Preload(board.CubesParent, 20);
             
             _cubeService.SetCubesParent(board.CubesParent);
             await _cubeService.SpawnPlayerCube();
