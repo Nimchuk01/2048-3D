@@ -28,3 +28,26 @@ MonoBehaviour:
   MinCubeCount: 5
   MaxCubeCount: 10
   PossibleValues: 02000000040000000800000010000000
+  CubeMaterials:
+  - Value: 2
+    Material: {fileID: 2100000, guid: f4fe94474849749449dd3b377875377f, type: 2}
+  - Value: 4
+    Material: {fileID: 2100000, guid: 173e9dbc126a6f3419944e6c91d0a7b1, type: 2}
+  - Value: 8
+    Material: {fileID: 2100000, guid: f97c2e5e563ce324880a0f81f42ad96d, type: 2}
+  - Value: 16
+    Material: {fileID: 2100000, guid: 6ee4b4970faaeaf40839e6f46064d2fd, type: 2}
+  - Value: 32
+    Material: {fileID: 2100000, guid: 88087794967b4c340aee2a2160c3702a, type: 2}
+  - Value: 64
+    Material: {fileID: 2100000, guid: 4c71564c1c8f72440ab4e40606aa8b9d, type: 2}
+  - Value: 128
+    Material: {fileID: 2100000, guid: 4bd520ff8e8e3ca4cb4b794532d1b7b4, type: 2}
+  - Value: 256
+    Material: {fileID: 2100000, guid: aa98bc5265f599e4c8d2a40e82ba28ac, type: 2}
+  - Value: 512
+    Material: {fileID: 2100000, guid: 1bc1f2caf456346498501e076a8925c3, type: 2}
+  - Value: 1024
+    Material: {fileID: 2100000, guid: 98c653c7e4ac0e242a98bdc15dc0f3be, type: 2}
+  - Value: 2048
+    Material: {fileID: 2100000, guid: 110b578ebf8c20546be93203a721c1f9, type: 2}

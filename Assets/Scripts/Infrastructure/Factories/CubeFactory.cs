@@ -39,7 +39,7 @@ namespace Infrastructure.Factories
             _container = container;
         }
 
-        public async UniTask<CubeEntity> CreateCube(Transform parent, bool isBoardCube = false)
+        public async UniTask<CubeEntity> CreateCube(Transform parent, bool isBoardCube = false, int? value = null)
         {
             CubeStaticData config = _staticDataService.CubeConfig;
 
@@ -55,8 +55,11 @@ namespace Infrastructure.Factories
 
             _container.InjectGameObject(cube.gameObject);
 
-            int value = isBoardCube ? GetBoardCubeValue(config) : GetSpawnCubeValue(config);
-            cube.Initialize(value);
+            int cubeValue = value ?? (isBoardCube ? GetBoardCubeValue(config) : GetSpawnCubeValue(config));
+            cube.Initialize(cubeValue);
+            
+            Material material = GetMaterialForValue(config, cubeValue);
+            cube.SetMaterial(material);
 
             _gameOverService.RegisterCube();
             _cubeTracker.Register(cube);
@@ -99,6 +102,20 @@ namespace Infrastructure.Factories
         private int GetSpawnCubeValue(CubeStaticData config)
         {
             return Random.value < config.SpawnChanceFor2 ? 2 : 4;
+        }
+        
+        private Material GetMaterialForValue(CubeStaticData config, int value)
+        {
+            if (config.CubeMaterials == null)
+                return null;
+                
+            foreach (var materialData in config.CubeMaterials)
+            {
+                if (materialData.Value == value)
+                    return materialData.Material;
+            }
+            
+            return null;
         }
     }
 }

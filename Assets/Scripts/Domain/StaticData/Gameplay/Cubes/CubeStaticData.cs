@@ -20,5 +20,7 @@ namespace Domain.StaticData.Gameplay.Cubes
         [Min(1)] public int MinCubeCount = 5;
         [Min(1)] public int MaxCubeCount = 8;
         public int[] PossibleValues = { 2, 4, 8, 16 };
+        
+        public CubeMaterialData[] CubeMaterials;
     }
 }

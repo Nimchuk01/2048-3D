@@ -10,6 +10,7 @@ namespace GameLogic.Gameplay.Cubes
         [SerializeField] private TMP_Text[] _valueLabels;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Collider _collider;
+        [SerializeField] private MeshRenderer _meshRenderer;
         
         private int _value;
         private IMergeService _mergeService;
@@ -31,6 +32,14 @@ namespace GameLogic.Gameplay.Cubes
             _value = value;
             RefreshLabels(_value);
             _isMerging = false;
+        }
+        
+        public void SetMaterial(Material material)
+        {
+            if (material == null)
+                return;
+            
+            _meshRenderer.material = material;
         }
 
         public void MarkAsMerging()

@@ -51,9 +51,8 @@ namespace Infrastructure.Services.Merge
 
         private async UniTask SpawnMergedCube(Vector3 position, int value, Transform parent)
         {
-            CubeEntity newCube = await _cubeFactory.CreateCube(parent, isBoardCube: true);
+            CubeEntity newCube = await _cubeFactory.CreateCube(parent, isBoardCube: true, value);
             newCube.transform.position = position;
-            newCube.Initialize(value);
         }
     }
 }
