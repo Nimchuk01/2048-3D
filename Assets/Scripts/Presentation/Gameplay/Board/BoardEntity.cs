@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic.Gameplay.Board
+namespace Presentation.Gameplay.Board
 {
     public class BoardEntity : MonoBehaviour
     {

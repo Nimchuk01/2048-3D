@@ -5,7 +5,6 @@ using Core.Enums.UI.Extensions;
 using Core.Factories.UI;
 using Core.Services.AssetManagement;
 using Core.Services.StaticData;
-using Core.UI;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.UI.Canvas;
 using UnityEngine;

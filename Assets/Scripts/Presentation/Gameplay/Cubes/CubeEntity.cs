@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace GameLogic.Gameplay.Cubes
+namespace Presentation.Gameplay.Cubes
 {
     public class CubeEntity : MonoBehaviour
     {

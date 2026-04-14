@@ -5,7 +5,7 @@ using Core.Services.Cube;
 using Core.UI.Management;
 using Cysharp.Threading.Tasks;
 using GameLogic.GameLoop.States.Interfaces;
-using GameLogic.Gameplay.Board;
+using Presentation.Gameplay.Board;
 using Presentation.UI.Views.Screens.Gameplay;
 
 namespace GameLogic.GameLoop.States

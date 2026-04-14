@@ -1,12 +1,13 @@
 using Core.Factories;
 using Core.Services.AssetManagement;
 using Core.Services.Boosters;
+using Core.Services.Cube;
 using Core.Services.GameOver;
 using Core.Services.ObjectPool;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using Domain.StaticData.Gameplay.Cubes;
-using GameLogic.Gameplay.Cubes;
+using Presentation.Gameplay.Cubes;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;

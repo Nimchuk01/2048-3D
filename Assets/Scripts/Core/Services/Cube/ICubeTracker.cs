@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using GameLogic.Gameplay.Cubes;
+using Presentation.Gameplay.Cubes;
 
-namespace Core.Services.Boosters
+namespace Core.Services.Cube
 {
     public interface ICubeTracker
     {

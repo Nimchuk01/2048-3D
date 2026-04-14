@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
-using GameLogic.Gameplay.Board;
-using UnityEngine;
+using Presentation.Gameplay.Board;
 
 namespace Core.Factories
 {

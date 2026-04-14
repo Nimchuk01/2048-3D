@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using GameLogic.Gameplay.Cubes;
+using Presentation.Gameplay.Cubes;
 using UnityEngine;
 
 namespace Core.Factories

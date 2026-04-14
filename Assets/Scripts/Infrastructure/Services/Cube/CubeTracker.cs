@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Core.Services.Boosters;
-using GameLogic.Gameplay.Cubes;
+using Core.Services.Cube;
+using Presentation.Gameplay.Cubes;
 
-namespace Infrastructure.Services.Boosters
+namespace Infrastructure.Services.Cube
 {
     public class CubeTracker : ICubeTracker
     {

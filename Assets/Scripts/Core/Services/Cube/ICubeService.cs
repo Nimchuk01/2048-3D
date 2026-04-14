@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using GameLogic.Gameplay.Cubes;
 using UnityEngine;
 
 namespace Core.Services.Cube

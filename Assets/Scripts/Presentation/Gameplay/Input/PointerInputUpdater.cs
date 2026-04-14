@@ -2,7 +2,7 @@ using Core.Services.Input;
 using UnityEngine;
 using Zenject;
 
-namespace Infrastructure.Input
+namespace Presentation.Gameplay.Input
 {
     public class PointerInputUpdater : MonoBehaviour
     {

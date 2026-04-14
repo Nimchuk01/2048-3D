@@ -3,7 +3,7 @@ using Core.Services.Merge;
 using Core.Services.Score;
 using Core.Services.StaticData;
 using Cysharp.Threading.Tasks;
-using GameLogic.Gameplay.Cubes;
+using Presentation.Gameplay.Cubes;
 using UnityEngine;
 
 namespace Infrastructure.Services.Merge

@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using Core.Enums;
 using Core.Enums.Scene;
 using Cysharp.Threading.Tasks;
 
