@@ -120,8 +120,8 @@ namespace Infrastructure.Services.Boosters
         private async UniTask AnimateSwing(CubeEntity source, CubeEntity target, Vector3 sourcePos, Vector3 targetPos, CancellationToken token)
         {
             const float shakeDuration = 0.3f;
-            var sourceTween = source.transform.DOShakePosition(shakeDuration, strength: 0.5f, vibrato: 8, randomness: 45f);
-            var targetTween = target.transform.DOShakePosition(shakeDuration, strength: 0.5f, vibrato: 8, randomness: 45f);
+            var sourceTween = source.transform.DOShakePosition(shakeDuration, strength: 0.3f, vibrato: 8, randomness: 45f);
+            var targetTween = target.transform.DOShakePosition(shakeDuration, strength: 0.3f, vibrato: 8, randomness: 45f);
 
             await UniTask.Delay((int)(shakeDuration * 1000), cancellationToken: token);
 
